@@ -28,21 +28,18 @@ public class ISesionService implements SesionService {
     private final JwtGenerador jwtGenerador;
     private final IRolRepository rolRepository;
     private final IUsuarioRepository usuarioRepository;
-    private final IUsuarioInfoRepository usuarioInfoRepository;
 
     public ISesionService(
             AuthenticationManager authenticationManager,
             PasswordEncoder passwordEncoder,
             JwtGenerador jwtGenerador,
             IRolRepository rolRepository,
-            IUsuarioRepository usuarioRepository,
-            IUsuarioInfoRepository usuarioInfoRepository) {
+            IUsuarioRepository usuarioRepository) {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.jwtGenerador = jwtGenerador;
         this.rolRepository = rolRepository;
         this.usuarioRepository = usuarioRepository;
-        this.usuarioInfoRepository = usuarioInfoRepository;
     }
 
     @Override
@@ -54,6 +51,7 @@ public class ISesionService implements SesionService {
 
         return LoginResponseDto.builder()
                 .accessToken(token)
+                .tokenType("Bearer")
                 .build();
     }
 
@@ -65,7 +63,7 @@ public class ISesionService implements SesionService {
 
         Usuario usuario = new Usuario();
         usuario.setUsuario(registerRequestDto.getUsuario());
-        usuario.setContrasena(registerRequestDto.getContrasena());
+        usuario.setContrasena(passwordEncoder.encode(registerRequestDto.getContrasena()));
         Rol rol = rolRepository.findByNombre(registerRequestDto.getRol())
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado."));
         usuario.setRol(Collections.singletonList(rol));
