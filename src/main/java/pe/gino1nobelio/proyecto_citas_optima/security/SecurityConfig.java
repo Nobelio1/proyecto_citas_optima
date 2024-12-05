@@ -49,11 +49,15 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/sesion/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/celular/crear").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/celular/listar").hasAnyAuthority("ADMIN", "USER")
-                        .requestMatchers(HttpMethod.GET, "/api/celular/listarId/**").hasAnyAuthority("ADMIN", "USER")
-                        .requestMatchers(HttpMethod.DELETE, "/api/celular/eliminar/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/celular/actualizar").hasAuthority("ADMIN")
+                        .requestMatchers("/usuario/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/cita/crear").hasAuthority("CLIENTE")
+                        .requestMatchers(HttpMethod.PUT, "/cita/asignar/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/cita/tomar/**").hasAuthority("AGENTE")
+                        .requestMatchers(HttpMethod.PUT, "/cita/cerrar/**").hasAuthority("AGENTE")
+                        .requestMatchers(HttpMethod.PUT, "/cita/reabrir/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/cita/eliminar/**").hasAnyAuthority("ADMIN", "AGENTE")
+                        .requestMatchers(HttpMethod.GET, "/cita/listar").hasAnyAuthority("ADMIN", "AGENTE", "CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/cita/**").hasAnyAuthority("ADMIN", "AGENTE", "CLIENTE")
                         .anyRequest().authenticated())
                 .httpBasic(httpBasic -> {
                 });

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pe.gino1nobelio.proyecto_citas_optima.dto.LoginRequestDto;
 import pe.gino1nobelio.proyecto_citas_optima.dto.LoginResponseDto;
+import pe.gino1nobelio.proyecto_citas_optima.dto.MessageReponseDto;
 import pe.gino1nobelio.proyecto_citas_optima.dto.RegisterRequestDto;
 import pe.gino1nobelio.proyecto_citas_optima.services.SesionService;
 
@@ -32,9 +33,13 @@ public class SesionController {
         try {
             boolean result = sesionService.register(registerRequestDto);
             if (result) {
-                return ResponseEntity.status(HttpStatus.OK).body("Se registrado correctamente");
+                return ResponseEntity.status(HttpStatus.OK).body(
+                        MessageReponseDto.builder().message("Usuario registrado correctamente").build()
+                );
             }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo registrar el usuario");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    MessageReponseDto.builder().message("No se pudo registrar el usuario").build()
+            );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
