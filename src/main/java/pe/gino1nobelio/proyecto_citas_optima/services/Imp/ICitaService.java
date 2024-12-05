@@ -120,7 +120,7 @@ public class ICitaService implements CitaService {
                 cita -> CitaDto.builder()
                         .id(cita.getIdCita())
                         .idCliente(cita.getCliente().getIdUsuario())
-                        .idAgente(cita.getAgente().getIdUsuario())
+                        .idAgente(cita.getAgente() != null ? cita.getAgente().getIdUsuario() : 0)
                         .proyecto(cita.getProyecto())
                         .consulta(cita.getConsulta())
                         .estado(cita.getEstado())

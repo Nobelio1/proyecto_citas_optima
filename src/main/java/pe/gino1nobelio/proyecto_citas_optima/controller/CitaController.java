@@ -119,7 +119,7 @@ public class CitaController {
         }
     }
 
-    @GetMapping("listar")
+    @GetMapping("lista")
     public ResponseEntity<?> listarCitas(){
         return ResponseEntity.ok().body(
                 citaService.listarCitas()

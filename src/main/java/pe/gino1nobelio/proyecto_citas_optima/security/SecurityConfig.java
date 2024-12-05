@@ -56,8 +56,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/cita/cerrar/**").hasAuthority("AGENTE")
                         .requestMatchers(HttpMethod.PUT, "/cita/reabrir/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/cita/eliminar/**").hasAnyAuthority("ADMIN", "AGENTE")
-                        .requestMatchers(HttpMethod.GET, "/cita/listar").hasAnyAuthority("ADMIN", "AGENTE", "CLIENTE")
-                        .requestMatchers(HttpMethod.GET, "/cita/**").hasAnyAuthority("ADMIN", "AGENTE", "CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/cita/lista").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/cita/**").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(httpBasic -> {
                 });
